@@ -16,6 +16,11 @@ urlpatterns = patterns('',
     
     url(r'^admin/', include(admin.site.urls)),
     
+    url(r'^inventory/all/$', 'inventory.views.inventory', name='inventory'),
+    
+    url(r'^inventory/additem/$', 'inventory.views.additem', name='additem'),
+    
+    url(r'^inventory/add_success/$', 'inventory.views.add_success', name='addsuccess'),
     # User auth urls
     url(r'^accounts/login/$', 'RORapp.views.login'),
     url(r'^accounts/auth/$', 'RORapp.views.auth_view'),
