@@ -8,7 +8,7 @@ from .forms import SignUpForm
 
 
 def home(request):
-    
+    '''
     form = SignUpForm(request.POST or None)
     
     if form.is_valid():
@@ -16,8 +16,8 @@ def home(request):
         save_it.save()
         messages.success(request, 'Thank you for signing up!')
         return HttpResponseRedirect('/thank-you/')
-        
-    return render_to_response("signup.html",
+       ''' 
+    return render_to_response("home.html",
                               locals(),
                               context_instance=RequestContext(request)
                               )
