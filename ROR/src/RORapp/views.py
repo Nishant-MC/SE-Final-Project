@@ -1,8 +1,49 @@
-from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, render_to_response, RequestContext, HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import auth
 from django.core.context_processors import csrf
+
 from forms import MyRegistrationForm
+
+### Home View ###
+
+def home(request):
+    
+    if request.method == 'POST':
+        form = MyRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/accounts/register_success')
+        
+        else:
+            return HttpResponseRedirect('/accounts/register_fail')
+        
+    args = {}
+    args.update(csrf(request))
+    
+    args['form'] = MyRegistrationForm()
+    print args
+    
+    user= str(request.user)
+    if user == 'AnonymousUser':
+        user = None
+    args['user_name'] = user
+    
+    
+    '''
+    if request.user.is_authenticated():
+        return HttpResponse("%s is logged in" % user_str)
+    else:
+        return HttpResponse("not logged in")
+    '''
+    return render_to_response("home.html",
+                              args)
+                              #locals(),
+                              #context_instance=RequestContext(request)
+                              #)
+    
+
+
 
 ### LOGIN ###
 def login(request):
@@ -35,9 +76,9 @@ def logout(request):
 
 def register_user(request):
     if request.method == 'POST':
-        form = MyRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
+        form_register = MyRegistrationForm(request.POST)
+        if form_register.is_valid():
+            form_register.save()
             return HttpResponseRedirect('/accounts/register_success')
         
         else:
@@ -48,7 +89,7 @@ def register_user(request):
     
     args['form'] = MyRegistrationForm()
     print args
-    return render_to_response('register.html',args)
+    return render_to_response('home.html',args)
 
 def register_success(request):
     return render_to_response('register_success.html')

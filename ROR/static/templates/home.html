@@ -1,5 +1,46 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>HOME</h1>
+    <h1 style="color: rgb(125,32,168); font-style: italic;">Welcome to Room of Requirement at NYU AD!</h1>
+    
+    <div>
+        
+        
+        {% if user_name %}
+            <p>{{ user_name }}</p>
+        {% else %}
+            
+            <h2> Login</h2>
+    
+        {% if form.errors %}
+        <p class="error">Sorry, that's not a valid username or password</p>
+        {% endif %}
+    
+        <form action="/accounts/auth/" method="post">{% csrf_token %}
+            <label for="username">User name:</label>
+            <input type="text" name="username" value="" id="username">
+                <br>
+            <label for="password">Password:</label>
+            <input type="password" name="password" value="" id="password">
+                <br> 
+            <input type="submit" value="login" />
+        </form>
+    </div>
+    
+    <div>
+        <h2>Register</h2>
+        <form action="/accounts/register/" method="post"> {% csrf_token %}
+        
+        {{form.as_p}}
+        
+        <input type="submit" value="Register" />
+        
+        </form>
+        
+    </div>
+            
+        {% endif %}
+    
+    
+    
 {% endblock %}

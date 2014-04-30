@@ -8,7 +8,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     
-    url(r'^$', 'signups.views.home', name='home'),
+    url(r'^$', 'RORapp.views.home', name='home'),
     
     url(r'^thank-you/$', 'signups.views.thankyou', name='thankyou'),
     
