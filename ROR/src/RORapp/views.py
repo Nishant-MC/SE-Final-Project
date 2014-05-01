@@ -117,6 +117,9 @@ def viewuserinv(request, user_name=''):
     items = Item.objects.filter(owner__exact=name)
     args['items'] = items
     args['user_name'] = user_name
+    args['loggedin_user'] = str(request.user)
+    
+    
     
     return render_to_response("inventory.html",
                               args,

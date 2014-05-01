@@ -3,8 +3,9 @@
 {% block content %}
     {% for user in users%}
     
-            <p>{{user}}</p>
+            <p><a href="/inventory/view/{{user}}">{{user}}</a></p>
         
     {% endfor %}
 
 {% endblock %}
+

@@ -4,7 +4,9 @@
     
     {% if user_name %}
         <h2>{{user_name}}'s inventory!</h2>
+        {% if user_name == loggedin_user %}
         <p><a href="{% url 'additem' %}">Add new item</a></p>
+        {% endif %}
         {% if items.count > 0 %}
             {% for item in items %}
                 <p><a href="/inventory/get/{{item.id}}">{{item.item_name}}</a></p>

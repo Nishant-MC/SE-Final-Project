@@ -6,7 +6,10 @@
 <p>Description: {{item.description}}</p>
 <p>Availability: {{item.available}}</p>
 
+{% if user_name == item.owner %}
 <p><a href="/inventory/remove/{{item.id}}">Remove</a></p>
+{% endif %}
+
 <p><a href="{% url 'inventory' %}">Back</a></p>
 {% endblock %}
 

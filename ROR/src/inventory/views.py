@@ -20,6 +20,10 @@ def inventory(request):
         items = Item.objects.filter(owner__exact=request.user)
         args['items'] = items
     args['user_name'] = user
+    args['loggedin_user'] = user
+    #else:
+    #    args['loggedin_user'] = login_name
+        
     
         
     return render_to_response("inventory.html",
@@ -49,8 +53,13 @@ def add_success(request):
                               )
     
 def viewitem(request, item_id=1):
+    args={}
+    args.update(csrf(request))
+    args['item'] = Item.objects.get(id=item_id)
+    args['user_name'] = request.user
+    
     return render_to_response("item.html",
-                              {'item':Item.objects.get(id=item_id)},
+                              args,
                               context_instance=RequestContext(request)
                               )
 
