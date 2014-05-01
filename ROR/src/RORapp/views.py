@@ -5,7 +5,7 @@ from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 from forms import MyRegistrationForm
 from inventory.models import Item
-
+from notification.models import Notification
 ### Home View ###
 
 def home(request):
@@ -64,8 +64,10 @@ def auth_view(request):
         return HttpResponseRedirect('/accounts/invalid')
     
 def loggedin(request):
-    
-    return render_to_response('loggedin.html', {'full_name': request.user.username, 'user_name':request.user.username})
+    n = Notification.objects.filter(user=request.user, viewed=False)
+    return render_to_response('loggedin.html',
+                              {'full_name': request.user.username, 'user_name':request.user.username, 'notifications':n}
+                              )
 
 def invalid_login(request):
     return render_to_response('login_invalid.html')

@@ -7,6 +7,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    (r'^notification/', include('notification.urls')),
     
     url(r'^$', 'RORapp.views.home', name='home'),
     
