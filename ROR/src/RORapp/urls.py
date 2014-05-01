@@ -28,6 +28,8 @@ urlpatterns = patterns('',
     
     url(r'^viewfriend/all/$', 'RORapp.views.viewfriend', name='viewfriend'),
     
+    url(r'^inventory/view/(?P<user_name>\w+)/$', 'RORapp.views.viewuserinv', name='viewuserinv'),
+    
     url(r'^inventory/add_success/$', 'inventory.views.add_success', name='addsuccess'),
     # User auth urls
     url(r'^accounts/login/$', 'RORapp.views.login', name='login'),

@@ -11,10 +11,11 @@
         </tr>
             {% for item in items %}
                 <tr>
-                    <td>{{item.item_name}}</td>
+                    <td><a href="/inventory/get/{{item.id}}">{{item.item_name}}</a></td>
                     <td>{{item.description}}</td>
                     <td>{{item.available}}</td>
-                    <td>{{item.owner}}</td>
+                    <td><a href="/inventory/view/{{item.owner}}">{{item.owner}}</a></td>
+                    <td></td>
                 </tr>
             {% endfor %}
     

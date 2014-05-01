@@ -4,6 +4,7 @@ from django.contrib import auth
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 from forms import MyRegistrationForm
+from inventory.models import Item
 
 ### Home View ###
 
@@ -108,4 +109,27 @@ def viewfriend(request):
     
     return render_to_response('viewfriend.html',args)
     
+def viewuserinv(request, user_name=''):
     
+    args = {}
+    args.update(csrf(request))
+    name = User.objects.get(username = user_name)
+    items = Item.objects.filter(owner__exact=name)
+    args['items'] = items
+    args['user_name'] = user_name
+    
+    return render_to_response("inventory.html",
+                              args,
+                              context_instance=RequestContext(request)
+                              )
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  
