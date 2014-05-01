@@ -1,5 +1,6 @@
 from django.shortcuts import render, render_to_response, RequestContext, HttpResponseRedirect
-
+from django.core.context_processors import csrf
+from django.contrib import auth
 #message handler
 from django.contrib import messages
 
@@ -7,19 +8,33 @@ from .forms import AddInventoryForm
 # Create your views here.
 
 
+from .models import Item
+
 def inventory(request):
+    
+    args = {}
+    args.update(csrf(request))
+        
+    user= str(request.user)
+    if user == 'AnonymousUser':
+        user = None
+    else:
+        items = Item.objects.filter(owner__exact=request.user)
+        args['items'] = items
+    args['user_name'] = user
+    
+        
     return render_to_response("inventory.html",
-                              locals(),
-                              context_instance=RequestContext(request)
+                              args,
                               )
 
 
 def additem(request):
     
     form = AddInventoryForm(request.POST or None)
-    
+    user= request.user
     if form.is_valid():
-        save_it = form.save(commit=False)
+        save_it = form.save(user, commit=False)
         save_it.save()
         return HttpResponseRedirect('/inventory/add_success')
      

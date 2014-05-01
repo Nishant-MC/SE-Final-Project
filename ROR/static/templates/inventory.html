@@ -1,7 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    <h2><a href="{% url 'additem' %}">Add </a></h2>
+    
+    {% if user_name %}
+        <h2>{{user_name}}'s inventory!</h2>
+        <p><a href="{% url 'additem' %}">Add new item</a></p>
+        {% if items.count > 0 %}
+            {% for item in items %}
+                <p>{{item.item_name}}</p>
+                
+            {% endfor %}
+            
+        {% else %}
+            <p>You have no items to show!</p>
+            
+        {% endif %}
         
+     
+    {% else %}
+        <p>You are not logged in. Please <a href="{% url 'home' %}" >log in</a> to view your inventory!</p>
+    
+    {% endif %}
 {% endblock %}

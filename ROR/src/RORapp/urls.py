@@ -22,11 +22,11 @@ urlpatterns = patterns('',
     
     url(r'^inventory/add_success/$', 'inventory.views.add_success', name='addsuccess'),
     # User auth urls
-    url(r'^accounts/login/$', 'RORapp.views.login'),
-    url(r'^accounts/auth/$', 'RORapp.views.auth_view'),
-    url(r'^accounts/logout/$', 'RORapp.views.logout'),
-    url(r'^accounts/loggedin/$', 'RORapp.views.loggedin'),
-    url(r'^accounts/invalid/$', 'RORapp.views.invalid_login'),    
+    url(r'^accounts/login/$', 'RORapp.views.login', name='login'),
+    url(r'^accounts/auth/$', 'RORapp.views.auth_view', name='auth_view'),
+    url(r'^accounts/logout/$', 'RORapp.views.logout', name='logout'),
+    url(r'^accounts/loggedin/$', 'RORapp.views.loggedin', name='loggedin'),
+    url(r'^accounts/invalid/$', 'RORapp.views.invalid_login', name='invalidlogin'),    
     
     # User registration
     url(r'^accounts/register/$', 'RORapp.views.register_user', name="register"),

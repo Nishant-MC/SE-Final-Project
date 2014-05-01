@@ -37,7 +37,7 @@ def home(request):
         return HttpResponse("not logged in")
     '''
     return render_to_response("home.html",
-                              args)
+                              args, context_instance=RequestContext(request))
                               #locals(),
                               #context_instance=RequestContext(request)
                               #)
@@ -63,14 +63,16 @@ def auth_view(request):
         return HttpResponseRedirect('/accounts/invalid')
     
 def loggedin(request):
-    return render_to_response('loggedin.html', {'full_name': request.user.username})
+    
+    return render_to_response('loggedin.html', {'full_name': request.user.username, 'user_name':request.user.username})
 
 def invalid_login(request):
-    return render_to_response('invalid_login.html')
+    return render_to_response('login_invalid.html')
 
 def logout(request):
     auth.logout(request)
-    return render_to_response('logout.html')
+    return HttpResponseRedirect('/')
+    #return render_to_response('logout.html')
 
 ### REGISTRATION ###
 
