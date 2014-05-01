@@ -7,7 +7,7 @@
         <p><a href="{% url 'additem' %}">Add new item</a></p>
         {% if items.count > 0 %}
             {% for item in items %}
-                <p>{{item.item_name}}</p>
+                <p><a href="/inventory/get/{{item.id}}">{{item.item_name}}</a></p>
                 
             {% endfor %}
             

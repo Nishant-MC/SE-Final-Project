@@ -6,8 +6,6 @@ from django.contrib import messages
 
 from .forms import AddInventoryForm
 # Create your views here.
-
-
 from .models import Item
 
 def inventory(request):
@@ -50,3 +48,13 @@ def add_success(request):
                               context_instance=RequestContext(request)
                               )
     
+def viewitem(request, item_id=1):
+    return render_to_response("item.html",
+                              {'item':Item.objects.get(id=item_id)},
+                              context_instance=RequestContext(request)
+                              )
+
+def removeitem(request, item_id=1):
+    item = Item.objects.filter(id=item_id)
+    item.delete()
+    return HttpResponseRedirect('/inventory/all')

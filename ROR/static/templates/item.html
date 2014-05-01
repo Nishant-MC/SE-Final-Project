@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h2>Item name: {{item.item_name}}</h2>
+<p>Description: {{item.description}}</p>
+<p>Availability: {{item.available}}</p>
+
+<p><a href="/inventory/remove/{{item.id}}">Remove</a></p>
+<p><a href="{% url 'inventory' %}">Back</a></p>
+{% endblock %}
+
+
+
+

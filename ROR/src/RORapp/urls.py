@@ -20,6 +20,10 @@ urlpatterns = patterns('',
     
     url(r'^inventory/additem/$', 'inventory.views.additem', name='additem'),
     
+    url(r'^inventory/get/(?P<item_id>\d+)/$', 'inventory.views.viewitem', name='viewitem'),
+    
+    url(r'^inventory/remove/(?P<item_id>\d+)/$', 'inventory.views.removeitem', name='removeitem'),
+    
     url(r'^inventory/add_success/$', 'inventory.views.add_success', name='addsuccess'),
     # User auth urls
     url(r'^accounts/login/$', 'RORapp.views.login', name='login'),
