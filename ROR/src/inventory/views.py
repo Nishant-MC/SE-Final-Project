@@ -58,3 +58,17 @@ def removeitem(request, item_id=1):
     item = Item.objects.filter(id=item_id)
     item.delete()
     return HttpResponseRedirect('/inventory/all')
+
+def browseitem(request):
+    item = Item.objects.all()
+    user= str(request.user)
+    if user == 'AnonymousUser':
+        user = None
+    args={}
+    args.update(csrf(request))
+    args['items'] = item
+    args['user_name'] = user
+    return render_to_response("browseitem.html",
+                              args,
+                              context_instance=RequestContext(request)
+                             )

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <table>
+        <tr>
+            <td>Item name</td>
+            <td>Description</td>
+            <td>Availability</td>
+            <td>Owner</td>
+        </tr>
+            {% for item in items %}
+                <tr>
+                    <td>{{item.item_name}}</td>
+                    <td>{{item.description}}</td>
+                    <td>{{item.available}}</td>
+                    <td>{{item.owner}}</td>
+                </tr>
+            {% endfor %}
+    
+    </table>
+
+
+{% endblock %}

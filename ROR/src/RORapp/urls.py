@@ -24,6 +24,10 @@ urlpatterns = patterns('',
     
     url(r'^inventory/remove/(?P<item_id>\d+)/$', 'inventory.views.removeitem', name='removeitem'),
     
+    url(r'^browseitem/all/$', 'inventory.views.browseitem', name='browseitem'),
+    
+    url(r'^viewfriend/all/$', 'RORapp.views.viewfriend', name='viewfriend'),
+    
     url(r'^inventory/add_success/$', 'inventory.views.add_success', name='addsuccess'),
     # User auth urls
     url(r'^accounts/login/$', 'RORapp.views.login', name='login'),

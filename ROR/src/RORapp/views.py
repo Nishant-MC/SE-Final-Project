@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response, RequestContext, HttpRes
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import auth
 from django.core.context_processors import csrf
-
+from django.contrib.auth.models import User
 from forms import MyRegistrationForm
 
 ### Home View ###
@@ -98,3 +98,14 @@ def register_success(request):
 
 def register_fail(request):
     return render_to_response('register_fail.html')
+
+def viewfriend(request):
+    users = User.objects.all()
+    args= {}
+    args.update(csrf(request))
+    
+    args['users'] = users
+    
+    return render_to_response('viewfriend.html',args)
+    
+    
