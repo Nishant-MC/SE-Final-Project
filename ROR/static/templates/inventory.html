@@ -1,11 +1,43 @@
 {% extends "base.html" %}
 
+{% block sidebar %}
+    
+    <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li \> <a href="{% url 'home' %}" >Home</a></li>
+          </ul>
+          
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="{% url 'inventory' %}">Your Inventory</a></li>
+            <li><a href="{% url 'viewfriend' %}">View your friends</a></li>
+            <li><a href="{% url 'browseitem' %}">Browse items</a></li>
+          </ul>
+          
+          <ul class="nav nav-sidebar">
+            <li><a href="">Forum</a></li>
+            <li><a href="">Make a Request</a></li>
+          </ul>
+        </div>
+{% endblock %}
+
+
 {% block content %}
     
     {% if user_name %}
         <h2>{{user_name}}'s inventory!</h2>
         {% if user_name == loggedin_user %}
         <p><a href="{% url 'additem' %}">Add new item</a></p>
+        
+        
+        <h3>Notifications</h3>
+        {% if notifications.count > 0 %}     
+        
+        {% for n in notifications %}
+            <p><a href="/notification/show/{{n.id}}">{{n.title}}</a></p>
+        {% endfor %}
+        {% else %}
+         <p>No messages</p>
+        {% endif %}
         {% endif %}
         {% if items.count > 0 %}
             {% for item in items %}

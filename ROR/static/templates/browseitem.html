@@ -1,13 +1,37 @@
 {% extends "base.html" %}
 
+{% block sidebar %}
+    
+    <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li \> <a href="{% url 'home' %}" >Home</a></li>
+          </ul>
+          
+          <ul class="nav nav-sidebar">
+            <li><a href="{% url 'inventory' %}">Your Inventory</a></li>
+            <li><a href="{% url 'viewfriend' %}">View your friends</a></li>
+            <li class="active"><a href="{% url 'browseitem' %}">Browse items</a></li>
+          </ul>
+          
+          <ul class="nav nav-sidebar">
+            <li><a href="">Forum</a></li>
+            <li><a href="">Make a Request</a></li>
+          </ul>
+        </div>
+{% endblock %}
+
+
+
 {% block content %}
 
+{% if user_name %}
     <table>
         <tr>
             <td>Item name</td>
             <td>Description</td>
             <td>Availability</td>
             <td>Owner</td>
+            <td>Request</td>
         </tr>
             {% for item in items %}
                 <tr>
@@ -15,11 +39,15 @@
                     <td>{{item.description}}</td>
                     <td>{{item.available}}</td>
                     <td><a href="/inventory/view/{{item.owner}}">{{item.owner}}</a></td>
-                    <td></td>
+                    <td><a href="/notification/request/{{item.owner}}">request</a></td>
                 </tr>
             {% endfor %}
     
     </table>
+
+{% else %}
+    <p>You are not logged in. Please <a href="{% url 'home' %}" >log in</a> to view your inventory!</p>
+{% endif %}
 
 
 {% endblock %}

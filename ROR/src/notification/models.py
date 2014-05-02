@@ -8,11 +8,13 @@ class Notification(models.Model):
     title = models.CharField(max_length=256)
     message = models.TextField()
     viewed = models.BooleanField(default=False)
-    user = models.ForeignKey(User)
-    
+    user = models.ForeignKey(User, related_name = 'receiver')
+    sender = models.ForeignKey(User, related_name='sender')
+'''    
 @receiver(post_save, sender=User)
 def create_welcome_message(sender, **kwargs):
     if kwargs.get('created',False):
         Notification.objects.create(user=kwargs.get('instance'),
                                     title="Welcome to Room of Requirement page!",
                                     message="Thank you for joining us!")
+'''

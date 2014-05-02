@@ -11,9 +11,9 @@ urlpatterns = patterns('',
     
     url(r'^$', 'RORapp.views.home', name='home'),
     
-    url(r'^thank-you/$', 'signups.views.thankyou', name='thankyou'),
+    #url(r'^thank-you/$', 'signups.views.thankyou', name='thankyou'),
     
-    url(r'^about-us/$', 'signups.views.aboutus', name='aboutus'),
+    #url(r'^about-us/$', 'signups.views.aboutus', name='aboutus'),
     
     url(r'^admin/', include(admin.site.urls)),
     
@@ -30,6 +30,8 @@ urlpatterns = patterns('',
     url(r'^viewfriend/all/$', 'RORapp.views.viewfriend', name='viewfriend'),
     
     url(r'^inventory/view/(?P<user_name>\w+)/$', 'RORapp.views.viewuserinv', name='viewuserinv'),
+    
+    url(r'^notification/request/(?P<user_name>\w+)/$', 'notification.views.request_item', name='request_item'),
     
     url(r'^inventory/add_success/$', 'inventory.views.add_success', name='addsuccess'),
     # User auth urls

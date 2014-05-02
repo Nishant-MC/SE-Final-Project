@@ -7,8 +7,10 @@ from django.contrib import messages
 from .forms import AddInventoryForm
 # Create your views here.
 from .models import Item
-
+from notification.models import Notification
 def inventory(request):
+    
+    
     
     args = {}
     args.update(csrf(request))
@@ -17,10 +19,13 @@ def inventory(request):
     if user == 'AnonymousUser':
         user = None
     else:
+        n = Notification.objects.filter(user=request.user, viewed=False)
         items = Item.objects.filter(owner__exact=request.user)
         args['items'] = items
+        args['notifications'] = n
     args['user_name'] = user
     args['loggedin_user'] = user
+    
     #else:
     #    args['loggedin_user'] = login_name
         

@@ -65,9 +65,10 @@ def auth_view(request):
     
 def loggedin(request):
     n = Notification.objects.filter(user=request.user, viewed=False)
-    return render_to_response('loggedin.html',
-                              {'full_name': request.user.username, 'user_name':request.user.username, 'notifications':n}
-                              )
+    return HttpResponseRedirect('/inventory/all')
+    #return render_to_response('loggedin.html',
+     #                         {'full_name': request.user.username, 'user_name':request.user.username, 'notifications':n}
+      #                        )
 
 def invalid_login(request):
     return render_to_response('login_invalid.html')
@@ -103,10 +104,14 @@ def register_fail(request):
     return render_to_response('register_fail.html')
 
 def viewfriend(request):
+    user = str(request.user)
+    if user == 'AnonymousUser':
+        user = None
+    
     users = User.objects.all()
     args= {}
     args.update(csrf(request))
-    
+    args['user_name'] = user
     args['users'] = users
     
     return render_to_response('viewfriend.html',args)
