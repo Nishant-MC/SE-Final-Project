@@ -8,10 +8,10 @@ from .forms import AddInventoryForm
 # Create your views here.
 from .models import Item
 from notification.models import Notification
+from django.contrib.auth.decorators import login_required
+
+@login_required(login_url='/')   # Very useful feature!
 def inventory(request):
-    
-    
-    
     args = {}
     args.update(csrf(request))
         

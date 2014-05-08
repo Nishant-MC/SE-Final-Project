@@ -23,7 +23,7 @@
 
 {% block content %}
     
-    {% if user_name %}
+    <!--{% if user_name %}-->
         <h2>{{user_name}}'s inventory!</h2>
         {% if user_name == loggedin_user %}
         <p><a href="{% url 'additem' %}">Add new item</a></p>
@@ -50,9 +50,9 @@
             
         {% endif %}
         
-     
+     <!-->
     {% else %}
         <p>You are not logged in. Please <a href="{% url 'home' %}" >log in</a> to view your inventory!</p>
     
-    {% endif %}
+    {% endif %} -->
 {% endblock %}

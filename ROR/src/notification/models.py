@@ -9,7 +9,7 @@ class Notification(models.Model):
     message = models.TextField()
     viewed = models.BooleanField(default=False)
     user = models.ForeignKey(User, related_name = 'receiver')
-    sender = models.ForeignKey(User, related_name='sender')
+    sender = models.ForeignKey(User, related_name = 'sender')
 '''    
 @receiver(post_save, sender=User)
 def create_welcome_message(sender, **kwargs):

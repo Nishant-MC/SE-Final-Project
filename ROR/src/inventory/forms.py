@@ -2,14 +2,17 @@ from django import forms
 from .models import Item
 
 class AddInventoryForm(forms.ModelForm):
+    
     class Meta:
         model = Item
+        categor = forms.ChoiceField(choices = ['Food', 'Things', 'Information'])
         fields = ('item_name', 'description', 'category')
         
     def save(self, username, commit=True):
         item = super(AddInventoryForm,self).save(commit=False)
         item.available = True
         item.owner = username
+        item.owner = category
         item.checked_out_date = None
         if commit:
             item.save()

@@ -1,14 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
+    
+    <h1 style="color: rgb(125,32,168); font-style: italic;">Welcome to Room of Requirement at NYU AD!</h1>
 
+    <div class="container">
+    
+          <form class="form-register" role="form" action="/accounts/register/" method="post">{% csrf_token %}
+            <h2 class="form-register-heading">Registration Form</h2>
+            <input type="first_name" class="form-control" placeholder="First name" required autofocus name="first_name" value="" id="first_name">
+            <input type="last_name" class="form-control" placeholder="Last name" required name="last_name" value="" id="last_name">
+            <input type="username" class="form-control" placeholder="User name" required autofocus name="user_name" value="" id="user_name">
+            <input type="email" class="form-control" placeholder="Email" required autofocus name="email" value="" id="email">
+            <input type="password" class="form-control" placeholder="Password" required name="password1" value="" id="password1">
+            <input type="password" class="form-control" placeholder="Re-enter Password" required name="password2" value="" id="password2">
+            
+            <button class="btn btn-lg btn-primary btn-block" type="submit" value="Register">Register!</button>
+            <!--
+            <input type="username" class="form-control" placeholder="User name" required autofocus name="username" value="" id="username">
+            <input type="password" class="form-control" placeholder="Password" required name="password" value="" id="password">
+            <label class="checkbox">
+              <p><a href="#">not a member yet?</a></p>
+            </label>
+            -->
+          </form>
+    
+    </div> <!-- /container -->
+    
+    
+<!--
     <h2>Register</h2>
     <form action="/accounts/register/" method="post"> {% csrf_token %}
     
-    {{form.as_p}}
+    
     
     <input type="submit" value="Register" />
     
     </form>
-    
+   --> 
 {% endblock %}

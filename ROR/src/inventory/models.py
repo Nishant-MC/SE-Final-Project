@@ -15,6 +15,5 @@ class Item(models.Model):
     available = models.BooleanField(default=False )
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
     owner = models.ForeignKey(User)
-    
     def __unicode__(self):
         return smart_unicode(self.item_name)

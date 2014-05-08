@@ -6,10 +6,11 @@ from django.contrib.auth.models import User
 from forms import MyRegistrationForm
 from inventory.models import Item
 from notification.models import Notification
+from django.contrib.auth.decorators import login_required
 ### Home View ###
 
+@login_required(login_url='/accounts/login')
 def home(request):
-    
     if request.method == 'POST':
         form = MyRegistrationForm(request.POST)
         if form.is_valid():
@@ -30,21 +31,12 @@ def home(request):
         user = None
     args['user_name'] = user
     
-    
-    '''
-    if request.user.is_authenticated():
-        return HttpResponse("%s is logged in" % user_str)
-    else:
-        return HttpResponse("not logged in")
-    '''
     return render_to_response("home.html",
                               args, context_instance=RequestContext(request))
                               #locals(),
                               #context_instance=RequestContext(request)
                               #)
     
-
-
 
 ### LOGIN ###
 def login(request):
@@ -82,20 +74,31 @@ def logout(request):
 
 def register_user(request):
     if request.method == 'POST':
-        form_register = MyRegistrationForm(request.POST)
-        if form_register.is_valid():
-            form_register.save()
-            return HttpResponseRedirect('/accounts/register_success')
-        
-        else:
+        first_name=request.POST.get('first_name','')
+        last_name=request.POST.get('last_name','')
+        username=request.POST.get('user_name','')
+        password1=request.POST.get('password1','')
+        password2=request.POST.get('password2','')
+        email=request.POST.get('email','')
+        if password1 != password2 or username=='' or email=='':
             return HttpResponseRedirect('/accounts/register_fail')
-        
+        else:
+            try:
+                user = User.objects.create_user(username = username, email = email, password = password1)
+            except:
+                return HttpResponseRedirect('/accounts/register_fail')                
+            user.first_name =  first_name
+            user.last_name = last_name
+            user.save()
+            return HttpResponseRedirect('/accounts/register_success')
+    
     args = {}
     args.update(csrf(request))
-    
+    '''
     args['form'] = MyRegistrationForm()
     print args
-    return render_to_response('home.html',args)
+    '''
+    return render_to_response('register.html',args)
 
 def register_success(request):
     return render_to_response('register_success.html')

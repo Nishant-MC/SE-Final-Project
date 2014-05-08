@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <h1 style="color: rgb(125,32,168); font-style: italic;">Welcome to Room of Requirement at NYU AD!</h1>
 
-    {% if form.errors %}
-        <p class="error">Sorry, that's not a valid username or password</p>
-    {% endif %}
+    <div class="container">
     
-    <form action="/accounts/auth/" method="post">{% csrf_token %}
-        <label for="username">User name:</label>
-        <input type="text" name="username" value="" id="username">
-            <br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" value="" id="password">
-            <br>
-        <input type="submit" value="login" />
+          <form class="form-signin" role="form" action="/accounts/auth/" method="post">{% csrf_token %}
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <input type="username" class="form-control" placeholder="User name" required autofocus name="username" value="" id="username">
+            <input type="password" class="form-control" placeholder="Password" required name="password" value="" id="password">
+            <label class="checkbox">
+              <p><a href="#">not a member yet?</a></p>
+            </label>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" value="login">Sign in</button>
+          </form>
     
-    </form>
-    
+    </div> <!-- /container -->
+
 {% endblock %}
+
+

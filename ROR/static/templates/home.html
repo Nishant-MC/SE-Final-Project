@@ -1,14 +1,21 @@
 {% extends "base.html" %}
 
+
+
+
+
 {% block content %}
     <h1 style="color: rgb(125,32,168); font-style: italic;">Welcome to Room of Requirement at NYU AD!</h1>
+     {% if user_name %}
     <div>
         <div style="float: left; width: 50%">  
-        {% if user_name %}
-                <p>{{ user_name }} is logged in</p> </div>
-            
-        {% else %}
-                
+       
+                <p>{{ user_name }} is logged in</p>
+        </div>
+    </div>
+
+    {% else %}
+           <!--     
                 <h2> Login</h2>
         
             {% if form.errors %}
@@ -37,9 +44,13 @@
             </form>
             
         </div>
+            -->
             
-        {% endif %}
-    </div>
+   
+        {% include "login.html" %}
+   
+    {% endif %}
+    
     
     
 {% endblock %}

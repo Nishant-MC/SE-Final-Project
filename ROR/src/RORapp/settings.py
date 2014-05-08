@@ -39,7 +39,9 @@ INSTALLED_APPS = (
     'inventory',
     'notification',
     'south',
-    #'signups',
+    'django.contrib.formtools',
+    #'userprofile',
+    
 )
 
 MIDDLEWARE_CLASSES = (
@@ -92,6 +94,7 @@ TEMPLATE_DIRS = (
     
 )
 
+AUTH_PROFILE_MODULE = 'userprofile.UserProfile'
 
 ## Just for local deployment!
 if DEBUG:
