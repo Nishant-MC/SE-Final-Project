@@ -11,7 +11,6 @@ class AddInventoryForm(forms.ModelForm):
         item = super(AddInventoryForm,self).save(commit=False)
         item.available = True
         item.owner = username
-        item.owner = category
         item.checked_out_date = None
         if commit:
             item.save()

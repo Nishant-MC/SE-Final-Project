@@ -6,7 +6,9 @@ urlpatterns = patterns('notification.views',
                        
                        url(r'^delete/(?P<notification_id>\d+)/$', 'delete_notification'),
                        
-                       url(r'^request/(?P<user_name>\w+)/$', 'request_item', name='request_item'),
+                       url(r'^request/(?P<item_id>\d+)/$', 'request_page', name='request_page'),
+                       
+                       url(r'^request_send/(?P<lender>\w+)/$', 'request_item', name='request_item'),
                        
                        url(r'^accept/(?P<receiver>\w+)/$', 'accept', name='accept'),
                        

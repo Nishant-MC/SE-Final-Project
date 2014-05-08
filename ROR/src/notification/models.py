@@ -10,6 +10,11 @@ class Notification(models.Model):
     viewed = models.BooleanField(default=False)
     user = models.ForeignKey(User, related_name = 'receiver')
     sender = models.ForeignKey(User, related_name = 'sender')
+    send_time = models.DateTimeField(auto_now_add=True, auto_now=False)
+    urgent = models.BooleanField(default=False)
+    
+
+
 '''    
 @receiver(post_save, sender=User)
 def create_welcome_message(sender, **kwargs):

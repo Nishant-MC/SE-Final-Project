@@ -3,6 +3,7 @@
 {% block content %}
     <h2>{{notification.title}}</h2>
     <p>{{notification.message}}</p>
+    <p>{{notification.urgent}}</p>
     <p><a href="/notification/delete/{{notification.id}}/">Mark as read</a></p>
     <p><a href="/notification/accept/{{notification.sender}}/">Accept</a></p>
     <p><a href="/notification/deny/{{notification.sender}}/">Deny</a></p>
