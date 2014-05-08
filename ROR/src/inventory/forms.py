@@ -5,7 +5,6 @@ class AddInventoryForm(forms.ModelForm):
     
     class Meta:
         model = Item
-        categor = forms.ChoiceField(choices = ['Food', 'Things', 'Information'])
         fields = ('item_name', 'description', 'category')
         
     def save(self, username, commit=True):
