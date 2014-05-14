@@ -42,16 +42,22 @@ def inventory(request):
 
 
 def additem(request):
+    if request.method == 'POST':
+        form = AddInventoryForm(request.POST , request.FILES)
+        user= request.user
+        if form.is_valid():
+            #save_it = form.save(user, commit=False)
+            form.save(user)
+            return HttpResponseRedirect('/inventory/add_success')
+    else:
+        form = AddInventoryForm()
     
-    form = AddInventoryForm(request.POST or None)
-    user= request.user
-    if form.is_valid():
-        save_it = form.save(user, commit=False)
-        save_it.save()
-        return HttpResponseRedirect('/inventory/add_success')
-     
+    args = {}
+    args.update(csrf(request))
+    args['form'] = form
+    
     return render_to_response("additem.html",
-                              locals(),
+                              args,
                               context_instance=RequestContext(request)
                              )
                               
@@ -63,7 +69,7 @@ def add_success(request):
                               )
 
     
-def viewitem(request, item_id=1):
+def viewitem(request, item_id=''):
     args={}
     args.update(csrf(request))
     args['item'] = Item.objects.get(id=item_id)
@@ -75,7 +81,7 @@ def viewitem(request, item_id=1):
                               )
 
 
-def removeitem(request, item_id=1):
+def removeitem(request, item_id=''):
     item = Item.objects.filter(id=item_id)
     item.delete()
     return HttpResponseRedirect('/inventory/all')

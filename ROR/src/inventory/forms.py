@@ -5,7 +5,7 @@ class AddInventoryForm(forms.ModelForm):
     
     class Meta:
         model = Item
-        fields = ('item_name', 'description', 'category')
+        fields = ('item_name', 'description', 'category', 'photo')
         
     def save(self, username, commit=True):
         item = super(AddInventoryForm,self).save(commit=False)

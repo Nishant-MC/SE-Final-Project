@@ -47,15 +47,21 @@
             <table>
                 {% if items.count > 0 %}
                     {% for item in items %}
-                        <tr>
+                        <tr style="border-bottom: thin solid #000000">
+                             <td width="20%" ><img src="/media/{{item.photo}}" width="100"></td>
                             <td width="40%" style="text-align: center;"><a href="/inventory/get/{{item.id}}">{{item.item_name}}</a></td>
                             <td width="40%" style="text-align: center;">{% if item.available %} Available{% else %} Not Available {% endif %}</td>
                         </tr>
                     {% endfor %}
+                    {% else %}
+                        <tr>
+                        <td>
+                        <h4>No Items!</h4>
+                        </td>
+                        </tr>
+                {% endif %}  
             </table>
-            {% else %}
-                <h4>No Items!</h4>
-            {% endif %}  
+            
         </div>
         
         
@@ -70,10 +76,16 @@
                                 <td width="40%" style="text-align: center;">{{item.holder.first_name}}</td>
                             </tr>
                         {% endfor %}
-                </table>
-                    {% else %}
+                        {% else %}
+                            <tr>
+                        <td>
                         <h4>No checked out items!</h4>
+                        </td>
+                        </tr>
+                            
                     {% endif %}
+                </table>
+                    
             </div>
 
             <div style="height: 50%;">
@@ -86,10 +98,16 @@
                                 <td width="40%" style="text-align: center;">{{item.owner.first_name}}</td>
                             </tr>
                         {% endfor %}
-                </table>
-                    {% else %}
+                        {% else %}
+                               <tr>
+                        <td>
                         <h4>No checked in items!</h4>
-                    {% endif %}
+                        </td>
+                        </tr>
+                        
+                        {% endif %}
+                </table>
+                    
             </div>
             
             
