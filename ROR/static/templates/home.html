@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 style="color: rgb(127,6,140); font-style: italic;">Welcome to Room of Requirement, {{user.first_name}}!</h1>
+    <h1 style="color: rgb(127,6,140); font-style: bold; text-align: center"><p class="Gotham-Bold">Welcome to the NYUAD RoR, {{user.first_name}}!</p></h1>
+    <hr class="glyph"><br>
     <center>
     <div style="width: auto; overflow: hidden; ">
         <div style="width: 50%; height: 100%; float:left; border-right: thin solid #000000;">
-            <h3 style="border-bottom: thin solid #000000">New Notifications!</h3> 
+            <h3 style="border-bottom: thin solid #000000; ">New Notifications!</h3> 
             
             {% if notification.count > 0 %}
             <table>
@@ -32,7 +33,7 @@
         
         
         <div style="width: 50%; float:right; height: 100%">
-            <h3 style="border-bottom: thin solid #000000">Your Pending Requests</h3>
+            <h3 style="border-bottom: thin solid #000000; vertical-align: middle;">Your Pending Requests</h3>
             
             {% if pending.count > 0 %}
             <table>

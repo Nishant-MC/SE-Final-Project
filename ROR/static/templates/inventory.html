@@ -23,7 +23,7 @@
 
 {% block content %}
     
-        <h2>{{user.first_name}}'s inventory!</h2>
+        <h2><p class="Gotham-Bold">{{user.first_name}}'s inventory!</p></h2>
         {% if user_name == loggedin_user %}
         <p><a href="{% url 'additem' %}">Add new item</a></p>
         {% endif %}
