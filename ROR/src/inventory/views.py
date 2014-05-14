@@ -10,7 +10,7 @@ from .models import Item
 from notification.models import Notification
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='/')   # Very useful feature!
+@login_required(login_url='/accounts/login')   # Very useful feature!
 def inventory(request):
     args = {}
     args.update(csrf(request))
@@ -19,12 +19,17 @@ def inventory(request):
     if user == 'AnonymousUser':
         user = None
     else:
-        n = Notification.objects.filter(user=request.user, viewed=False)
+        n = Notification.objects.filter(receiver=request.user, viewed=False)
         items = Item.objects.filter(owner__exact=request.user)
         args['items'] = items
         args['notifications'] = n
+    checked_out_items = Item.objects.filter(available = False, owner = request.user)
+    checked_in_items = Item.objects.filter(holder = request.user)
+    args['user'] = request.user
     args['user_name'] = user
     args['loggedin_user'] = user
+    args['checked_out_items'] = checked_out_items
+    args['checked_in_items'] = checked_in_items
     
     #else:
     #    args['loggedin_user'] = login_name
@@ -56,6 +61,7 @@ def add_success(request):
                               locals(),
                               context_instance=RequestContext(request)
                               )
+
     
 def viewitem(request, item_id=1):
     args={}
@@ -68,11 +74,13 @@ def viewitem(request, item_id=1):
                               context_instance=RequestContext(request)
                               )
 
+
 def removeitem(request, item_id=1):
     item = Item.objects.filter(id=item_id)
     item.delete()
     return HttpResponseRedirect('/inventory/all')
 
+@login_required(login_url='/accounts/login') 
 def browseitem(request):
     item = Item.objects.all()
     user= str(request.user)

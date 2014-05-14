@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'notification',
     'south',
     'django.contrib.formtools',
-    #'userprofile',
+    'userprofile',
     
 )
 

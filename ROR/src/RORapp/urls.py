@@ -38,7 +38,6 @@ urlpatterns = patterns('',
     url(r'^accounts/login/$', 'RORapp.views.login', name='login'),
     url(r'^accounts/auth/$', 'RORapp.views.auth_view', name='auth_view'),
     url(r'^accounts/logout/$', 'RORapp.views.logout', name='logout'),
-    url(r'^accounts/loggedin/$', 'RORapp.views.loggedin', name='loggedin'),
     url(r'^accounts/invalid/$', 'RORapp.views.invalid_login', name='invalidlogin'),    
     
     # User registration

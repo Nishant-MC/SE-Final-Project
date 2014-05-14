@@ -25,9 +25,11 @@ class Item(models.Model):
     category = models.CharField(max_length=25, choices = CATEGORY_CHOICES, default='Other')
     added_date = models.DateTimeField(auto_now_add=True, auto_now=False)
     checked_out_date = models.DateTimeField(null=True, blank=True)
-    available = models.BooleanField(default=False )
+    available = models.BooleanField(default=True )
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User,related_name = 'owner')
+    holder = models.ForeignKey(User, related_name = 'holder', null=True)
+    
     
     def __unicode__(self):
         return smart_unicode(self.item_name)

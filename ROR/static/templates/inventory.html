@@ -23,12 +23,12 @@
 
 {% block content %}
     
-    <!--{% if user_name %}-->
-        <h2>{{user_name}}'s inventory!</h2>
+        <h2>{{user.first_name}}'s inventory!</h2>
         {% if user_name == loggedin_user %}
         <p><a href="{% url 'additem' %}">Add new item</a></p>
-        
-        
+        {% endif %}
+         
+        <!--
         <h3>Notifications</h3>
         {% if notifications.count > 0 %}     
         
@@ -38,21 +38,63 @@
         {% else %}
          <p>No messages</p>
         {% endif %}
-        {% endif %}
-        {% if items.count > 0 %}
-            {% for item in items %}
-                <p><a href="/inventory/get/{{item.id}}">{{item.item_name}}</a></p>
-                
-            {% endfor %}
-            
-        {% else %}
-            <p>You have no items to show!</p>
-            
-        {% endif %}
+        -->
         
-     <!-->
-    {% else %}
-        <p>You are not logged in. Please <a href="{% url 'home' %}" >log in</a> to view your inventory!</p>
-    
-    {% endif %} -->
+    <center>
+    <div style="width: auto; overflow: hidden; ">
+        <div style="width: 50%; height: 100%; float:left; border-right: thin solid #000000;">
+            <h3 style="border-bottom: thin solid #000000">Your Item List</h3> 
+            <table>
+                {% if items.count > 0 %}
+                    {% for item in items %}
+                        <tr>
+                            <td width="40%" style="text-align: center;"><a href="/inventory/get/{{item.id}}">{{item.item_name}}</a></td>
+                            <td width="40%" style="text-align: center;">{% if item.available %} Available{% else %} Not Available {% endif %}</td>
+                        </tr>
+                    {% endfor %}
+            </table>
+            {% else %}
+                <h4>No Items!</h4>
+            {% endif %}  
+        </div>
+        
+        
+        <div style="width: 50%; float:right; height: 100%">
+            <div style="height: 50%; border-bottom: thin solid #000000">
+                <h3 style="border-bottom: thin solid #000000">Checked out items</h3>
+                <table>
+                    {% if checked_out_items.count > 0 %}
+                        {% for item in checked_out_items %}
+                            <tr>
+                                <td width="40%" style="text-align: center;"><a href="/inventory/get/{{item.id}}">{{item.item_name}}</a></td>
+                                <td width="40%" style="text-align: center;">{{item.holder.first_name}}</td>
+                            </tr>
+                        {% endfor %}
+                </table>
+                    {% else %}
+                        <h4>No checked out items!</h4>
+                    {% endif %}
+            </div>
+
+            <div style="height: 50%;">
+                <h3 style="border-bottom: thin solid #000000">Checked in items</h3>
+                <table>
+                    {% if checked_in_items.count > 0 %}
+                        {% for item in checked_in_items %}
+                            <tr>
+                                <td width="40%" style="text-align: center;"><a href="/inventory/get/{{item.id}}">{{item.item_name}}</a></td>
+                                <td width="40%" style="text-align: center;">{{item.owner.first_name}}</td>
+                            </tr>
+                        {% endfor %}
+                </table>
+                    {% else %}
+                        <h4>No checked in items!</h4>
+                    {% endif %}
+            </div>
+            
+            
+        </div>
+       
+    </div>
+    </center>
 {% endblock %}

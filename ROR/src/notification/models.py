@@ -2,16 +2,19 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from inventory.models import Item
 # Create your models here.
 
 class Notification(models.Model):
+    item = models.ForeignKey(Item, related_name = 'item')
     title = models.CharField(max_length=256)
     message = models.TextField()
     viewed = models.BooleanField(default=False)
-    user = models.ForeignKey(User, related_name = 'receiver')
+    receiver = models.ForeignKey(User, related_name = 'receiver')
     sender = models.ForeignKey(User, related_name = 'sender')
     send_time = models.DateTimeField(auto_now_add=True, auto_now=False)
     urgent = models.BooleanField(default=False)
+    m_type = models.CharField(max_length=256,  null=True, blank=True)
     
 
 

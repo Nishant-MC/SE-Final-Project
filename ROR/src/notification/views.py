@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.context_processors import csrf
 from inventory.models import Item
+from datetime import datetime
 # Create your views here.
 
 def show_notification(request, notification_id):
@@ -28,12 +29,12 @@ def request_page(request, item_id=''):
     #title = 'Request from %s'%str(request.user)
     item = Item.objects.get(id = item_id)
     #Notification.objects.create(user=name, title=title, message=message, sender=request.user)
-    args['borrower'] = str(request.user)
+    args['borrower'] = request.user
     args['item'] = item
     
     return render_to_response('requestform.html',args)
 
-def request_item(request, lender=''):
+def request_item(request, lender='', item_id=''):
     
     if request.method == 'POST':
         title=request.POST.get('title','')
@@ -41,7 +42,8 @@ def request_item(request, lender=''):
         urgent = request.POST.get('urgent','')
         receiver = User.objects.get(username=lender)
         sender = request.user
-        Notification.objects.create(user=receiver, title=title, message=message, sender=request.user, urgent = urgent)
+        m_type = 'request'
+        Notification.objects.create(item = item, receiver=receiver, title=title, message=message, sender=request.user, urgent = urgent, m_type = m_type)
         
     args = {}
     args.update(csrf(request))
@@ -52,15 +54,20 @@ def request_item(request, lender=''):
         
 
     
-def accept(request, receiver=''):
+def accept(request, receiver='', item_id=''):
     
     args = {}
     args.update(csrf(request))
-    name = User.objects.get(username = receiver)
+    holder = User.objects.get(username = receiver)
     title = 'Accept from %s'%str(request.user)
     message="You can pick it up soon! :)"
-    Notification.objects.create(user=name, title=title, message=message, sender=request.user)
-    args['name'] = name
+    Notification.objects.create(item = Item.objects.get(id=item_id),receiver=holder, title=title, message=message, sender=request.user, m_type = 'response')
+    item = Item.objects.get(id=item_id)
+    item.available=False
+    item.checked_out_date=datetime.now()
+    item.holder=holder
+    item.save()
+    args['name'] = holder
     args['user_name'] = receiver
     
     return render_to_response('request_success.html',args)
@@ -73,7 +80,7 @@ def deny(request, receiver=''):
     name = User.objects.get(username = receiver)
     title = 'Deny from %s'%str(request.user)
     message="Sorry! It's not available at the moment!"
-    Notification.objects.create(user=name, title=title, message=message, sender=request.user)
+    Notification.objects.create(receiver=name, title=title, message=message, sender=request.user, m_type = 'response')
     args['name'] = name
     args['user_name'] = receiver
     

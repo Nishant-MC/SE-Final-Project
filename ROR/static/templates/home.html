@@ -1,56 +1,62 @@
 {% extends "base.html" %}
 
-
-
-
-
 {% block content %}
-    <h1 style="color: rgb(125,32,168); font-style: italic;">Welcome to Room of Requirement at NYU AD!</h1>
-     {% if user_name %}
-    <div>
-        <div style="float: left; width: 50%">  
-       
-                <p>{{ user_name }} is logged in</p>
-        </div>
-    </div>
-
-    {% else %}
-           <!--     
-                <h2> Login</h2>
+    <h1 style="color: rgb(125,32,168); font-style: italic;">Welcome to Room of Requirement, {{user.first_name}}!</h1>
+    <center>
+    <div style="width: auto; overflow: hidden; ">
+        <div style="width: 50%; height: 100%; float:left; border-right: thin solid #000000;">
+            <h3 style="border-bottom: thin solid #000000">New Notifications!</h3> 
+            
+            {% if notification.count > 0 %}
+            <table>
         
-            {% if form.errors %}
-                <p class="error">Sorry, that's not a valid username or password</p>
+                {% for i in notification %}
+                <tr>
+                    <td width="40%" style="text-align: center;"><a href="/notification/show/{{i.id}}">{{i.title}}</a></td>
+                    <td width="40%" style="text-align: center;">{{i.send_time}}</td>
+                    
+                    <td width="20%" style="text-align: center; color:#FF0000;">{% if i.urgent %}
+                        URGENT!
+                    {% endif %}
+                    
+                    </td>
+                </tr>
+                {% endfor %}
+        </table>
+            {% else %}
+                
+                <h4>No new notifications!</h4>
             {% endif %}
-        
-            <form action="/accounts/auth/" method="post">{% csrf_token %}
-                <label for="username">User name:</label>
-                <input type="text" name="username" value="" id="username">
-                    <br>
-                <label for="password">Password:</label>
-                <input type="password" name="password" value="" id="password">
-                    <br> 
-                <input type="submit" value="login" />
-            </form>
+           
         </div>
         
-        <div style="float: right; width: 50%">
-            <h2>Register</h2>
-            <form action="/accounts/register/" method="post"> {% csrf_token %}
+        
+        <div style="width: 50%; float:right; height: 100%">
+            <h3 style="border-bottom: thin solid #000000">Your Pending Requests</h3>
             
-            {{form.as_p}}
-            
-            <input type="submit" value="Register" />
-            
-            </form>
+            {% if pending.count > 0 %}
+            <table>
+               
+                {% for i in pending %}
+                <tr>
+                    <td width="40%" style="text-align: center;"><a href="/notification/show/{{i.id}}">Requested {{i.receiver.first_name}}'s {{i.item.item_name}}</a></td>
+                    <td width="40%" style="text-align: center;">{{i.send_time}}</td>
+                    <td width="20%" style="text-align: center; color:#FF0000;">{% if i.urgent %}
+                        URGENT!
+                    {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+        </table>
+            {% else %}
+                
+                <h4>No pending requests!</h4>
+            {% endif %}
+           
             
         </div>
-            -->
-            
-   
-        {% include "login.html" %}
-   
-    {% endif %}
-    
-    
-    
+       
+    </div>
+    </center>
+
 {% endblock %}
