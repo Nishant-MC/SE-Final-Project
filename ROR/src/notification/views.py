@@ -10,8 +10,12 @@ from datetime import datetime
 # Create your views here.
 
 def show_notification(request, notification_id):
+    
     n = Notification.objects.get(id=notification_id)
-    return render_to_response('notification.html', {'notification':n})
+    args = {}
+    args['notification'] = n
+    args['user'] = request.user
+    return render_to_response('notification.html', args)
 
 
 
@@ -43,6 +47,7 @@ def request_item(request, lender='', item_id=''):
         receiver = User.objects.get(username=lender)
         sender = request.user
         m_type = 'request'
+        item = Item.objects.get(id=item_id)
         Notification.objects.create(item = item, receiver=receiver, title=title, message=message, sender=request.user, urgent = urgent, m_type = m_type)
         
     args = {}
@@ -58,11 +63,13 @@ def accept(request, receiver='', item_id='', notification_id=''):
     n = Notification.objects.get(id=notification_id)
     n.viewed = True
     n.save()
+    
     args = {}
     args.update(csrf(request))
     holder = User.objects.get(username = receiver)
-    title = 'Accept from %s'%str(request.user)
-    message="You can pick it up soon! :)"
+    item_name = Item.objects.get(id=item_id).item_name
+    title = '%s has accepted your request for %s'%(str(request.user.first_name),item_name)
+    message="You can pick it up soon! :) "
     Notification.objects.create(item = Item.objects.get(id=item_id),receiver=holder, title=title, message=message, sender=request.user, m_type = 'response')
     item = Item.objects.get(id=item_id)
     item.available=False

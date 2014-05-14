@@ -108,3 +108,12 @@ def browseitem(request):
                               args,
                               context_instance=RequestContext(request)
                              )
+
+def return_item(request, item_id=''):
+    item = Item.objects.get(id=item_id)
+    item.available=True
+    item.holder = None
+    item.due_date = None
+    item.checked_out_date= None
+    item.save()
+    return HttpResponseRedirect('/inventory/all')

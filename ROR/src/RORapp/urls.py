@@ -21,6 +21,8 @@ urlpatterns = patterns('',
     
     url(r'^inventory/additem/$', 'inventory.views.additem', name='additem'),
     
+    url(r'^inventory/return/(?P<item_id>\d+)/$', 'inventory.views.return_item', name='return_item'),
+    
     url(r'^inventory/get/(?P<item_id>\d+)/$', 'inventory.views.viewitem', name='viewitem'),
     
     url(r'^inventory/remove/(?P<item_id>\d+)/$', 'inventory.views.removeitem', name='removeitem'),

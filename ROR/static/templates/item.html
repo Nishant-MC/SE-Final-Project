@@ -1,18 +1,35 @@
 {% extends "base.html" %}
 
 
-
-
 {% block content %}
-<h2>Item name: {{item.item_name}}</h2>
-<p>Description: {{item.description}}</p>
-<p>Availability: {{item.available}}</p>
+    
+    
+    
+<h1><p class="Gotham-Bold">{{item.owner.first_name}}'s {{item.item_name}}</p></h1>
+<hr class="glyph"><br>
+<center>
+<p><img src="/media/{{item.photo}}" width="200" height="200" align="middle"></p><br>
+
+<p><b>Description:</b> {{item.description}}</p><br>
+
+<p><b>Available?</b> {% if item.available %}Yes{% else %}No {% endif %}</p><br>
+
 
 {% if user_name == item.owner %}
-<p><a href="/inventory/remove/{{item.id}}">Remove</a></p>
+    {% if not item.available %}
+        <p>Due to be returned by {{item.due_date}}</p><br>
+    {% endif %}
+        <p><a href="/inventory/remove/{{item.id}}">Remove</a></p>
+{% else %}
+    {% if item.available %}
+        <p><a href="/notification/request/{{item.id}}">REQUEST</a></p>
+    
+    {% else %}
+        <p>Due to be returned by {{item.due_date}}</p>
+    {% endif %}
 {% endif %}
+</center>
 
-<p><a href="{% url 'inventory' %}">Back</a></p>
 {% endblock %}
 
 

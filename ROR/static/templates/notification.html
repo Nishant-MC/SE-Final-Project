@@ -4,7 +4,12 @@
     <h2>{{notification.title}}</h2>
     <p>{{notification.message}}</p>
     <p>{{notification.urgent}}</p>
-    <p><a href="/notification/delete/{{notification.id}}/">Mark as read</a></p>
+    {% if notification.sender != user and notification.m_type != 'response' %}
     <p><a href="/notification/accept/{{notification.sender}}/{{notification.item.id}}/{{notification.id}}/">Accept</a></p>
     <p><a href="/notification/deny/{{notification.sender}}/{{notification.id}}/">Deny</a></p>
+
+    {% else %}
+        <p><a href="/notification/delete/{{notification.id}}/">Mark as read</a></p>
+    {% endif %}
+
 {% endblock %}

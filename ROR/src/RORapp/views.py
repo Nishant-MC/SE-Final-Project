@@ -16,7 +16,7 @@ def home(request):
     args = {}
     args.update(csrf(request))
     user = request.user
-    notification = Notification.objects.filter(receiver=user, viewed=False, m_type = 'request')
+    notification = Notification.objects.filter(receiver=user, viewed=False)
     pending = Notification.objects.filter(sender=user, viewed=False, m_type = 'request')
     args['user'] = user
     args['notification'] = notification
@@ -126,7 +126,7 @@ def viewuserinv(request, user_name=''):
     
     
     
-    return render_to_response("inventory.html",
+    return render_to_response("inventory_friend.html",
                               args,
                               context_instance=RequestContext(request)
                               )

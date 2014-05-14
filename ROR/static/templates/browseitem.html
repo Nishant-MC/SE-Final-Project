@@ -24,30 +24,31 @@
 
 {% block content %}
 
-{% if user_name %}
+<h1><p class="Gotham-Bold">Item Directory</p></h1>
+        <hr class="glyph">
+        <center>
     <table>
-        <tr>
-            <td>Item name</td>
-            <td>Description</td>
-            <td>Availability</td>
-            <td>Owner</td>
-            <td>Request</td>
+        
+        <tr style="border-bottom: thin solid #000000">
+                        <td width="30%" style="text-align: center;"><h4>Photo</h4></td>
+                        <td width="20%" style="text-align: center;"><h4>Item name</h4></td>
+                        <td width="10%" style="text-align: center;"><h4>Availability</h4></td>
+                        <td width="20%" style="text-align: center;"><h4>Owner</h4></td>
+                        <td width="20%" style="text-align: center;"><h4>Request</h4></td>
         </tr>
             {% for item in items %}
-                <tr>
-                    <td><a href="/inventory/get/{{item.id}}">{{item.item_name}}</a></td>
-                    <td>{{item.description}}</td>
-                    <td>{{item.available}}</td>
-                    <td><a href="/inventory/view/{{item.owner}}">{{item.owner}}</a></td>
-                    <td><a href="/notification/request/{{item.id}}">request</a></td>
+                <tr style="border-bottom: thin solid #000000;">
+                    <td width="30%" style="padding-bottom: 10px; padding-top: 10px;"><center><img src="/media/{{item.photo}}" width="100" height="100" align="middle"></center></td>
+                    <td width="20%" style="text-align: center;">{{item.item_name}}</td>
+                    <td width="10%" style="text-align: center;">{% if item.available %} Yes {% else %} No {% endif %}</td>
+                    <td width="20%" style="text-align: center;"><a href="/inventory/view/{{item.owner}}">{{item.owner.first_name}}</a></td>
+                    <td width="20%" style="text-align: center;">{% if item.available %} <a href="/notification/request/{{item.id}}">REQUEST {% else %} Not available {% endif %}</a></td>
                 </tr>
             {% endfor %}
     
     </table>
 
-{% else %}
-    <p>You are not logged in. Please <a href="{% url 'home' %}" >log in</a> to view your inventory!</p>
-{% endif %}
+
 
 
 {% endblock %}
