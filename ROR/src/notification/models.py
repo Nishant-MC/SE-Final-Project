@@ -6,7 +6,7 @@ from inventory.models import Item
 # Create your models here.
 
 class Notification(models.Model):
-    item = models.ForeignKey(Item, related_name = 'item')
+    item = models.ForeignKey(Item, related_name = 'item', null=True)
     title = models.CharField(max_length=256)
     message = models.TextField()
     viewed = models.BooleanField(default=False)

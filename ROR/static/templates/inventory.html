@@ -24,6 +24,7 @@
 {% block content %}
     
         <h2><p class="Gotham-Bold">{{user.first_name}}'s inventory!</p></h2>
+        <hr class="glyph"><br>
         {% if user_name == loggedin_user %}
         <p><a href="{% url 'additem' %}">Add new item</a></p>
         {% endif %}

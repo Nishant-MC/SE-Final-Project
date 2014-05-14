@@ -91,7 +91,7 @@ def deny(request, receiver='', notification_id=''):
     name = User.objects.get(username = receiver)
     title = 'Deny from %s'%str(request.user)
     message="Sorry! It's not available at the moment!"
-    Notification.objects.create(receiver=name, title=title, message=message, sender=request.user, m_type = 'response')
+    Notification.objects.create(item=None, receiver=name, title=title, message=message, sender=request.user.first_name, m_type = 'response')
     args['name'] = name
     args['user_name'] = receiver
     

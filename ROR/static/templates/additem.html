@@ -5,7 +5,10 @@
 
 {% block content %}
 
-    <h2>Add Item</h2>
+    <h2><p class="Gotham-Bold">Add Item</p></h2>
+        <hr class="glyph"><br>
+   
+   
     <form action="/inventory/additem/" method="post" enctype="multipart/form-data"> {% csrf_token %}
     
         {{form.as_p}}
@@ -13,5 +16,5 @@
     <input type="submit" value="Add" />
     
     </form>
-    
+   
 {% endblock %}
