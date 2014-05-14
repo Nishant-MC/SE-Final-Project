@@ -1,0 +1,8 @@
+.verticalLine {
+    border-left: thick solid #57068C;
+}
+
+/* This works by enclosing your content in a VL div
+<div class="verticalLine">
+YOUR CONTENT
+</div>  */
