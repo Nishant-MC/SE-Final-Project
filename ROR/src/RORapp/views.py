@@ -103,7 +103,7 @@ def viewfriend(request):
     if user == 'AnonymousUser':
         user = None
     
-    users = User.objects.all()
+    users = User.objects.all().exclude(username=request.user)
     args= {}
     args.update(csrf(request))
     args['user'] = request.user
@@ -120,8 +120,8 @@ def viewuserinv(request, user_name=''):
     name = User.objects.get(username = user_name)
     items = Item.objects.filter(owner__exact=name)
     args['items'] = items
-    args['user_name'] = user_name
-    args['loggedin_user'] = str(request.user)
+    args['user'] = name
+    args['loggedin_user'] = request.user
     
     
     

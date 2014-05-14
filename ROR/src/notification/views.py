@@ -54,8 +54,10 @@ def request_item(request, lender='', item_id=''):
         
 
     
-def accept(request, receiver='', item_id=''):
-    
+def accept(request, receiver='', item_id='', notification_id=''):
+    n = Notification.objects.get(id=notification_id)
+    n.viewed = True
+    n.save()
     args = {}
     args.update(csrf(request))
     holder = User.objects.get(username = receiver)
@@ -73,8 +75,10 @@ def accept(request, receiver='', item_id=''):
     return render_to_response('request_success.html',args)
     
     
-def deny(request, receiver=''):
-    
+def deny(request, receiver='', notification_id=''):
+    n = Notification.objects.get(id=notification_id)
+    n.viewed = True
+    n.save()
     args = {}
     args.update(csrf(request))
     name = User.objects.get(username = receiver)

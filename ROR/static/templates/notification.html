@@ -5,6 +5,6 @@
     <p>{{notification.message}}</p>
     <p>{{notification.urgent}}</p>
     <p><a href="/notification/delete/{{notification.id}}/">Mark as read</a></p>
-    <p><a href="/notification/accept/{{notification.sender}}/{{notification.item.id}}/">Accept</a></p>
-    <p><a href="/notification/deny/{{notification.sender}}/">Deny</a></p>
+    <p><a href="/notification/accept/{{notification.sender}}/{{notification.item.id}}/{{notification.id}}/">Accept</a></p>
+    <p><a href="/notification/deny/{{notification.sender}}/{{notification.id}}/">Deny</a></p>
 {% endblock %}

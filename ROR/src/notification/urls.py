@@ -10,7 +10,7 @@ urlpatterns = patterns('notification.views',
                        
                        url(r'^request_send/(?P<lender>\w+)/(?P<item_id>\d+)/$', 'request_item', name='request_item'),
                        
-                       url(r'^accept/(?P<receiver>\w+)/(?P<item_id>\d+)/$', 'accept', name='accept'),
+                       url(r'^accept/(?P<receiver>\w+)/(?P<item_id>\d+)/(?P<notification_id>\d+)/$', 'accept', name='accept'),
                        
-                       url(r'^deny/(?P<receiver>\w+)/$', 'deny', name='deny'),
+                       url(r'^deny/(?P<receiver>\w+)/(?P<notification_id>\d+)/$', 'deny', name='deny'),
                       )

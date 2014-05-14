@@ -43,7 +43,7 @@
     <center>
     <div style="width: auto; overflow: hidden; ">
         <div style="width: 50%; height: 100%; float:left; border-right: thin solid #000000;">
-            <h3 style="border-bottom: thin solid #000000">Your Item List</h3> 
+            <h3 style="border-bottom: thin solid #000000">{{user.first_name}}'s Item List</h3> 
             <table>
                 {% if items.count > 0 %}
                     {% for item in items %}

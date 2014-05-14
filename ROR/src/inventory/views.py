@@ -82,7 +82,7 @@ def removeitem(request, item_id=1):
 
 @login_required(login_url='/accounts/login') 
 def browseitem(request):
-    item = Item.objects.all()
+    item = Item.objects.all().exclude(owner=request.user)
     user= str(request.user)
     if user == 'AnonymousUser':
         user = None
