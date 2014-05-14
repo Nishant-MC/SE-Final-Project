@@ -2,12 +2,12 @@
 
 {% block content %}
     
-    <h1 style="color: rgb(127,6,140); font-style: bold;"><p class="Gotham-Bold">Welcome to the NYUAD Room of Requirement!</p></h1>
+    <h1 style="color: rgb(127,6,140); font-style: bold; text-align: center"><p class="Gotham-Bold">Welcome to the NYUAD Room of Requirement!</p></h1>
 
-    <div class="container">
+    <div class="alwayscentered">
     
           <form class="form-register" role="form" action="/accounts/register/" method="post">{% csrf_token %}
-            <h2 class="form-register-heading">Registration Form</h2>
+            <h2 class="form-register-heading"><p class="Gotham-Bold">Registration Form</p></h2>
             <input type="first_name" class="form-control" placeholder="First name" required autofocus name="first_name" value="" id="first_name">
             <input type="last_name" class="form-control" placeholder="Last name" required name="last_name" value="" id="last_name">
             <input type="username" class="form-control" placeholder="User name" required autofocus name="user_name" value="" id="user_name">

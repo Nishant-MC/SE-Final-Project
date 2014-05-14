@@ -9,11 +9,11 @@ hr.glyph {
     text-align: center;
 }
 hr.glyph:after {
-    content: "§";
+    content: url(/static/img/torch.png) no-repeat center;
     display: inline-block;
     position: relative; 
     top: -0.7em;  
     font-size: 1.5em;
-    padding: 0 0.25em;
-    background: white;
+    padding: 0em;
+    background: 0xEEEEE;
 }
