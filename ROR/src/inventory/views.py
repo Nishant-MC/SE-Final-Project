@@ -9,6 +9,7 @@ from .forms import AddInventoryForm
 from .models import Item
 from notification.models import Notification
 from django.contrib.auth.decorators import login_required
+from userprofile.models import UserProfile
 
 @login_required(login_url='/accounts/login')   # Very useful feature!
 def inventory(request):
@@ -48,6 +49,9 @@ def additem(request):
         if form.is_valid():
             #save_it = form.save(user, commit=False)
             form.save(user)
+            item_num = UserProfile.objects.get(user=user)
+            item_num.item_number += 1
+            item_num.save()
             return HttpResponseRedirect('/inventory/add_success')
     else:
         form = AddInventoryForm()
@@ -82,7 +86,11 @@ def viewitem(request, item_id=''):
 
 
 def removeitem(request, item_id=''):
-    item = Item.objects.filter(id=item_id)
+    item = Item.objects.get(id=item_id)
+    user = item.owner
+    item_num = UserProfile.objects.get(user=user)
+    item_num.item_number -= 1
+    item_num.save()
     item.delete()
     return HttpResponseRedirect('/inventory/all')
 

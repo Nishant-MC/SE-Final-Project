@@ -103,7 +103,8 @@ def viewfriend(request):
     if user == 'AnonymousUser':
         user = None
     
-    users = User.objects.all().exclude(username=request.user)
+    users = UserProfile.objects.all().exclude(user=request.user)
+    #users = users.exclude(user.first_name='')
     args= {}
     args.update(csrf(request))
     args['user'] = request.user

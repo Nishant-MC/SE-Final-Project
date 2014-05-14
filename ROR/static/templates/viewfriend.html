@@ -22,18 +22,31 @@
 
 
 {% block content %}
-{% if user_name %}
-    
-    {% for user in users%}
-    
-            <p><a href="/inventory/view/{{user}}">{{user}}</a></p>
+        <h1><p class="Gotham-Bold">User Directory</p></h1>
+        <hr class="glyph">
+        <center>
+        <table>
+                <tr>
+                        <td width="30%" style="text-align: center;"><h4>Name</h4></td>
+                        <td width="20%" style="text-align: center;"><h4>Number of Items</h4></td>
+                        <td width="25%" style="text-align: center;"><h4>Lender Credit</h4></td>
+                        <td width="25%" style="text-align: center;"><h4>Borrower Credit</h4></td>
+                </tr>
+                {% for user in users%}
+                <tr>
+                        <td width="30%" style="text-align: center;"><a href="/inventory/view/{{user.user}}">{{user.user.first_name}}</a></td>
+                        <td width="20%" style="text-align: center;">{{user.item_number}}</td>
+                        <td width="25%" style="text-align: center;">{{user.lend_credit}}</td>
+                        <td width="25%" style="text-align: center;">{{user.borrow_credit}}</td>
+                </tr>
+                {% endfor %}
         
-    {% endfor %}
+        </table>
+        
+        </center>
+    
+    
 
-{% else %}
-        <p>You are not logged in. Please <a href="{% url 'home' %}" >log in</a> to view your inventory!</p>
-    
-    
-{% endif %}    
+
 {% endblock %}
 
