@@ -12,6 +12,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             {% if user %}
+            <li><a href="/notification/inbox/in">Inbox</a></li>
             <li><a href="{% url 'logout' %}">Log Out</a></li>
             {% endif %}
           </ul>

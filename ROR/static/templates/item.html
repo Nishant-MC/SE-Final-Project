@@ -1,5 +1,26 @@
 {% extends "base.html" %}
 
+{% block sidebar %}
+    
+    <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li \> <a href="{% url 'home' %}" >Home</a></li>
+          </ul>
+          
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="{% url 'inventory' %}">Your Inventory</a></li>
+            <li><a href="{% url 'viewfriend' %}">View your friends</a></li>
+            <li><a href="{% url 'browseitem' %}">Browse items</a></li>
+          </ul>
+          
+          <ul class="nav nav-sidebar">
+            <li><a href="">Forum</a></li>
+            <li><a href="">Make a Request</a></li>
+          </ul>
+        </div>
+{% endblock %}
+
+
 
 {% block content %}
     
@@ -26,6 +47,7 @@
     
     {% else %}
         <p>Due to be returned by {{item.due_date}}</p>
+        <p><a href="/inventory/return/{{item.id}}">Return</p>
     {% endif %}
 {% endif %}
 </center>

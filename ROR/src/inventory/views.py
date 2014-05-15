@@ -3,7 +3,8 @@ from django.core.context_processors import csrf
 from django.contrib import auth
 #message handler
 from django.contrib import messages
-
+from datetime import datetime
+from datetime import timedelta
 from .forms import AddInventoryForm
 # Create your views here.
 from .models import Item
@@ -110,6 +111,8 @@ def browseitem(request):
                              )
 
 def return_item(request, item_id=''):
+    
+    
     item = Item.objects.get(id=item_id)
     item.available=True
     item.holder = None
@@ -122,4 +125,17 @@ def return_item(request, item_id=''):
     lender = UserProfile.objects.get(user=item.owner)
     lender.lend_credit+=1
     lender.save()
+    
+    title = 'Return: %s'%item.item_name
+    message='Thank you for lending me your %s. Please take time to rate me as a borrower!'%item.item_name
+    expiry_day = datetime.now() + timedelta(days=30)
+    Notification.objects.create(item=None, receiver=lender.user, title=title, message=message, sender=request.user, m_type = 'response', expiry_day=expiry_day, status='return')
+    
+    
+    
     return HttpResponseRedirect('/inventory/all')
+
+
+
+
+

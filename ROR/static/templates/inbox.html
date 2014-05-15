@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2><p class="Gotham-Bold">Inbox</p></h2>
+        <hr class="glyph">
+            
+    <p><a href="/notification/inbox/in">Inbox</a> / <a href="/notification/inbox/sent">Sent</a></p>
+    
+    <center>
+        {% if type == 'in' %}
+        <table>
+        
+            <tr style="border-bottom: thin solid #000000">
+                        <td width="20%" style="text-align: center;"><h4>From</h4></td>
+                        <td width="20%" style="text-align: center;"><h4>Subject</h4></td>
+                        <td width="30%" style="text-align: center;"><h4>Message</h4></td>
+                        <td width="20%" style="text-align: center;"><h4>Date</h4></td>
+                        <td width="10%" style="text-align: center;"><h4>Status</h4></td>
+            </tr>
+            {% if messages.count > 0 %}
+            {% for m in messages %}
+                <tr style="border-bottom: thin solid #000000">
+                        <td width="20%" style="text-align: center;">{{m.sender.first_name}}</td>
+                        <td width="20%" style="text-align: center;"><a href="/notification/show/{{m.id}}">{{m.title}}</a></td>
+                        <td width="30%" style="text-align: center;">{{m.message}}</td>
+                        <td width="20%" style="text-align: center;">{{m.send_time|date:"d-M-Y"}}</td>
+                        <td width="10%" style="text-align: center;">{{m.status}}</td>
+            </tr>
+            
+            {% endfor %}
+            {% endif %}
+        </table>
+        {% else %}
+        <table>
+        
+            <tr style="border-bottom: thin solid #000000">
+                        <td width="20%" style="text-align: center;"><h4>To</h4></td>
+                        <td width="20%" style="text-align: center;"><h4>Subject</h4></td>
+                        <td width="30%" style="text-align: center;"><h4>Message</h4></td>
+                        <td width="20%" style="text-align: center;"><h4>Date</h4></td>
+                        <td width="10%" style="text-align: center;"><h4>Status</h4></td>
+            </tr>
+            {% if messages.count > 0 %}
+            {% for m in messages %}
+                <tr style="border-bottom: thin solid #000000">
+                        <td width="20%" style="text-align: center;">{{m.receiver.first_name}}</td>
+                        <td width="20%" style="text-align: center;"><a href="/notification/show/{{m.id}}">{{m.title|truncatechars:30}}</a></td>
+                        <td width="30%" style="text-align: center;">{{m.message}}</td>
+                        <td width="20%" style="text-align: center;">{{m.send_time|date:"d-M-Y"}}</td>
+                        <td width="10%" style="text-align: center;">{{m.status}}</td>
+            </tr>
+            
+            {% endfor %}
+            {% endif %}
+        </table>
+        
+        
+        {% endif %}
+    </center>
+{% endblock %}
+

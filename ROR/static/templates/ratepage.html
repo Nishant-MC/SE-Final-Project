@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+     <h2><p class="Gotham-Bold">Rate the borrower</p></h2>
+        <hr class="glyph">
+    <center>
+    <form action="/notification/rate/{{user.username}}/{{notification_id}}/" method="post"> {% csrf_token %}
+        <label>Rate:
+        <select name='rate'>
+            <option value="-2">Returned broken</option>
+            <option value="-1">Returned in poor condition</option>
+            <option value="1" selected="selected">Item Returned</option>
+            <option value="2">Returned with interest</option>
+        </select>
+        </label>
+        <br>
+        <input type="submit" value="Rate" />
+    </form>
+    </center>
+{% endblock %}

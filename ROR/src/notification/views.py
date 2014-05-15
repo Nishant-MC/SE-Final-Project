@@ -59,8 +59,8 @@ def request_item(request, lender='', item_id=''):
         
     args = {}
     args.update(csrf(request))
-    args['name'] = str(receiver)
-    args['user_name'] = str(request.user)
+    args['name'] = receiver.first_name
+    args['item'] = item.item_name
     
     return render_to_response('request_success.html',args)
         
@@ -81,17 +81,18 @@ def accept(request, receiver='', item_id='', notification_id=''):
     item_name = Item.objects.get(id=item_id).item_name
     title = '%s has accepted your request for %s'%(str(request.user.first_name),item_name)
     message="You can pick it up soon! :) "
-    Notification.objects.create(item = Item.objects.get(id=item_id),receiver=holder, title=title, message=message, sender=request.user, m_type = 'response')
+    expiry_day = datetime.now() + timedelta(days=30)
+    Notification.objects.create(item = Item.objects.get(id=item_id),receiver=holder, title=title, message=message, sender=request.user, m_type = 'response', expiry_day=expiry_day)
     item = Item.objects.get(id=item_id)
     item.available=False
     item.checked_out_date=datetime.now()
     item.due_date = datetime.now() + timedelta(days=days)
     item.holder=holder
     item.save()
-    args['name'] = holder
-    args['user_name'] = receiver
+    args['name'] = holder.first_name
+    args['status'] = 'accepted'
     
-    return render_to_response('request_success.html',args)
+    return render_to_response('response.html',args)
     
     
 def deny(request, receiver='', notification_id=''):
@@ -102,13 +103,43 @@ def deny(request, receiver='', notification_id=''):
     args = {}
     args.update(csrf(request))
     name = User.objects.get(username = receiver)
-    title = 'Deny from %s'%str(request.user)
+    title = 'Deny from %s'%str(request.user.first_name)
     message="Sorry! It's not available at the moment!"
-    Notification.objects.create(item=None, receiver=name, title=title, message=message, sender=request.user.first_name, m_type = 'response')
-    args['name'] = name
-    args['user_name'] = receiver
+    expiry_day = datetime.now() + timedelta(days=30)
+    Notification.objects.create(item=None, receiver=name, title=title, message=message, sender=request.user, m_type = 'response', expiry_day=expiry_day)
+    args['name'] = name.first_name
+    args['status'] = 'denied'
+    return render_to_response('response.html',args)
     
-    return render_to_response('request_success.html',args)
+def inbox(request, option='in'):
+    if option=='' or option=='in':
+        m = Notification.objects.filter(receiver=request.user)
+    else:
+        m = Notification.objects.filter(sender=request.user)
+    args = {}
+    args.update(csrf(request))
+    args['messages'] = m
+    args['type'] = option
+    return render_to_response('inbox.html',args)
     
-       
+    
+def rate(request, user_name='', notification_id=''):
+    args = {}
+    args.update(csrf(request))
+    user = User.objects.get(username=user_name)
+    if request.method == 'POST':
+        user = User.objects.get(username=user_name)
+        user = UserProfile.objects.get(user=user)
+        rate = request.POST.get('rate','')
+        user.borrow_credit += int(rate)
+        user.save()
+        n = Notification.objects.get(id=notification_id)
+        n.viewed = True
+        n.save()
+        return render_to_response('thankyou.html')
+
+    else:
+        args['user'] = user
+        args['notification_id'] = notification_id
+        return render_to_response('ratepage.html', args)
     

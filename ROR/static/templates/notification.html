@@ -1,15 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{notification.title}}</h2>
+     <h2><p class="Gotham-Bold">Message</p></h2>
+        <hr class="glyph">
+    <h3>{{notification.title}}</h3>
+    <br>
     <p>{{notification.message}}</p>
-    <p>{{notification.urgent}}</p>
-    {% if notification.sender != user and notification.m_type != 'response' %}
+    <br>
+    {% if notification.sender != user and notification.m_type != 'response' and notification.status == 'Pending' %}
     <p><a href="/notification/accept/{{notification.sender}}/{{notification.item.id}}/{{notification.id}}/">Accept</a></p>
     <p><a href="/notification/deny/{{notification.sender}}/{{notification.id}}/">Deny</a></p>
 
     {% else %}
         <p><a href="/notification/delete/{{notification.id}}/">Mark as read</a></p>
+    {% endif %}
+    
+    {% if notification.status == 'return' and notification.viewed != True %}
+        <p><a href="/notification/rate/{{notification.sender}}/{{notification.id}}/">Rate the borrower</p>
     {% endif %}
 
 {% endblock %}
