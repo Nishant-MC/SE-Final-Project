@@ -124,6 +124,8 @@ def viewuserinv(request, user_name=''):
     args['items'] = items
     args['user'] = name
     args['loggedin_user'] = request.user
+    credit = UserProfile.objects.get(user=name)
+    args['credit'] = credit
     
     
     

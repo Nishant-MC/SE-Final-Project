@@ -27,11 +27,13 @@ def inventory(request):
         args['notifications'] = n
     checked_out_items = Item.objects.filter(available = False, owner = request.user)
     checked_in_items = Item.objects.filter(holder = request.user)
+    credit = UserProfile.objects.get(user=request.user)
     args['user'] = request.user
     args['user_name'] = user
     args['loggedin_user'] = user
     args['checked_out_items'] = checked_out_items
     args['checked_in_items'] = checked_in_items
+    args['credit'] = credit
     
     #else:
     #    args['loggedin_user'] = login_name

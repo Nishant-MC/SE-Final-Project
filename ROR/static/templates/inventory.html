@@ -25,6 +25,7 @@
     
         <h2><p class="Gotham-Bold">{{user.first_name}}'s inventory!</p></h2>
         <hr class="glyph">
+        <p>Lender Credit: {{credit.lend_credit}}  /  Borrower Credit: {{credit.borrow_credit}}</p>
         {% if user_name == loggedin_user %}
         <p><a href="{% url 'additem' %}">Add new item</a></p>
         {% endif %}
