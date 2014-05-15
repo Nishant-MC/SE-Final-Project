@@ -8,6 +8,7 @@ from inventory.models import Item
 from notification.models import Notification
 from django.contrib.auth.decorators import login_required
 from userprofile.models import UserProfile
+from datetime import datetime
 ### Home View ###
 
 @login_required(login_url='/accounts/login')
@@ -16,8 +17,8 @@ def home(request):
     args = {}
     args.update(csrf(request))
     user = request.user
-    notification = Notification.objects.filter(receiver=user, viewed=False)
-    pending = Notification.objects.filter(sender=user, viewed=False, m_type = 'request')
+    notification = Notification.objects.filter(receiver=user, viewed=False, expiry_day__gte=datetime.now())
+    pending = Notification.objects.filter(sender=user, viewed=False, m_type = 'request', expiry_day__gte=datetime.now())
     args['user'] = user
     args['notification'] = notification
     args['pending'] = pending

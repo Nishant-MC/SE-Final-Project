@@ -24,7 +24,7 @@
 {% block content %}
     
         <h2><p class="Gotham-Bold">{{user.first_name}}'s inventory!</p></h2>
-        <hr class="glyph"><br>
+        <hr class="glyph">
         {% if user_name == loggedin_user %}
         <p><a href="{% url 'additem' %}">Add new item</a></p>
         {% endif %}
@@ -79,6 +79,7 @@
                             <tr>
                                 <td width="40%" style="text-align: center;"><a href="/inventory/get/{{item.id}}">{{item.item_name}}</a></td>
                                 <td width="40%" style="text-align: center;">{{item.holder.first_name}}</td>
+                                <td width="20%" style="text-align: center;">{{item.due_date|date:"d-M-Y"}}</td>
                             </tr>
                         {% endfor %}
                         {% else %}
@@ -99,9 +100,10 @@
                     {% if checked_in_items.count > 0 %}
                         {% for item in checked_in_items %}
                             <tr>
-                                <td width="40%" style="text-align: center;"><a href="/inventory/get/{{item.id}}">{{item.item_name}}</a></td>
-                                <td width="40%" style="text-align: center;">{{item.owner.first_name}}</td>
-                                 <td width="20%" style="text-align: center;"><a href="/inventory/return/{{item.id}}">Return</a></td>
+                                <td width="30%" style="text-align: center;"><a href="/inventory/get/{{item.id}}">{{item.item_name}}</a></td>
+                                <td width="30%" style="text-align: center;">{{item.owner.first_name}}</td>
+                                <td width="20%" style="text-align: center;">{{item.due_date|date:"d-M-Y"}}</td>
+                                <td width="20%" style="text-align: center;"><a href="/inventory/return/{{item.id}}">Return</a></td>
                                 
                             </tr>
                         {% endfor %}

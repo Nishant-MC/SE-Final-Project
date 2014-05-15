@@ -15,8 +15,9 @@ class Notification(models.Model):
     send_time = models.DateTimeField(auto_now_add=True, auto_now=False)
     urgent = models.BooleanField(default=False)
     m_type = models.CharField(max_length=256,  null=True, blank=True)
-    
-
+    status = models.CharField(max_length=256,  null=True, blank=True)
+    duration = models.CharField(max_length=10, null=True, blank=True)
+    expiry_day = models.DateTimeField(null=True, blank=True)
 
 '''    
 @receiver(post_save, sender=User)

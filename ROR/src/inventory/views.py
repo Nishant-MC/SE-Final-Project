@@ -116,4 +116,10 @@ def return_item(request, item_id=''):
     item.due_date = None
     item.checked_out_date= None
     item.save()
+    borrower = UserProfile.objects.get(user=request.user)
+    borrower.borrow_credit+=1
+    borrower.save()
+    lender = UserProfile.objects.get(user=item.owner)
+    lender.lend_credit+=1
+    lender.save()
     return HttpResponseRedirect('/inventory/all')

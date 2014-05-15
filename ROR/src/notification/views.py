@@ -7,6 +7,8 @@ from django.dispatch import receiver
 from django.core.context_processors import csrf
 from inventory.models import Item
 from datetime import datetime
+from datetime import timedelta
+from userprofile.models import UserProfile
 # Create your views here.
 
 def show_notification(request, notification_id):
@@ -47,8 +49,13 @@ def request_item(request, lender='', item_id=''):
         receiver = User.objects.get(username=lender)
         sender = request.user
         m_type = 'request'
+        duration = request.POST.get('duration','')
         item = Item.objects.get(id=item_id)
-        Notification.objects.create(item = item, receiver=receiver, title=title, message=message, sender=request.user, urgent = urgent, m_type = m_type)
+        if urgent:
+            expiry_day = datetime.now() + timedelta(minutes=1)
+        else:
+            expiry_day = datetime.now() + timedelta(days=30)
+        Notification.objects.create(item = item, receiver=receiver, title=title, message=message, sender=request.user, urgent = urgent, m_type = m_type, duration=duration, status='Pending', expiry_day = expiry_day)
         
     args = {}
     args.update(csrf(request))
@@ -62,8 +69,12 @@ def request_item(request, lender='', item_id=''):
 def accept(request, receiver='', item_id='', notification_id=''):
     n = Notification.objects.get(id=notification_id)
     n.viewed = True
+    n.status = 'Accepted'
+    days = int(n.duration)
     n.save()
-    
+    lender = UserProfile.objects.get(user=request.user)
+    lender.lend_credit+=1
+    lender.save()
     args = {}
     args.update(csrf(request))
     holder = User.objects.get(username = receiver)
@@ -74,6 +85,7 @@ def accept(request, receiver='', item_id='', notification_id=''):
     item = Item.objects.get(id=item_id)
     item.available=False
     item.checked_out_date=datetime.now()
+    item.due_date = datetime.now() + timedelta(days=days)
     item.holder=holder
     item.save()
     args['name'] = holder
@@ -85,6 +97,7 @@ def accept(request, receiver='', item_id='', notification_id=''):
 def deny(request, receiver='', notification_id=''):
     n = Notification.objects.get(id=notification_id)
     n.viewed = True
+    n.status = 'Denied'
     n.save()
     args = {}
     args.update(csrf(request))
